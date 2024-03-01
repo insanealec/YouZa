@@ -10,7 +10,8 @@ class MenuController extends Controller
 {
     public function index(Request $request)
     {
-        return Inertia::render('Menu');
+        $items = Item::all();
+        return Inertia::render('Menu', ['items'=> $items]);
     }
 
     public function item(Request $request, $id)
