@@ -28,6 +28,7 @@ Route::get('/', function () {
 
 Route::prefix('menu')->controller(MenuController::class)->middleware(['auth', 'verified'])->group(function () {
     Route::get('/', 'index')->name('menu');
+    Route::get('/category/{id}', 'category')->name('category');
     Route::get('/item/{id}', 'item')->name('item');
 });
 

@@ -12,6 +12,13 @@ export interface Item {
     base_price: number;
 }
 
+export interface Category {
+    id: number;
+    name: string;
+    description: string;
+    items: Item[];
+}
+
 export type PageProps<T extends Record<string, unknown> = Record<string, unknown>> = T & {
     auth: {
         user: User;
