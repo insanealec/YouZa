@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
@@ -32,6 +33,9 @@ Route::prefix('menu')->controller(MenuController::class)->middleware(['auth', 'v
     Route::get('/item/{id}', 'item')->name('item');
 });
 
+Route::prefix('admin')->controller(AdminController::class)->middleware(['auth', 'admin'])->group(function () {
+    Route::get('/', 'index')->name('admin');
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
