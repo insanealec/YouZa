@@ -1,42 +1,71 @@
 <script setup lang="ts">
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head, Link } from '@inertiajs/vue3';
-import { Category, Item } from '@/types';
+import Accordion from '@/Pages/Admin/Partials/Accordion.vue';
+import { Head } from '@inertiajs/vue3';
+import { Menu, Category, Item } from '@/types';
+import { ref } from 'vue';
 
 defineProps<{
-    categories: Category[];
-    items: Item[];
+  menus: Menu[];
+  categories: Category[];
+  items: Item[];
 }>();
+
+const currentAccordion = ref(0);
+const menuModal = ref();
+
+const handleAccordionChange = (value: number) => {
+  console.log(value)
+  currentAccordion.value = value;
+};
 </script>
 
 <template>
-    <Head title="Admin | Dashboard" />
 
-    <AuthenticatedLayout>
-        <template #header>
-            <h2 class="font-semibold text-xl leading-tight">Dashboard</h2>
-        </template>
+  <Head title="Admin | Dashboard" />
 
-        <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="flex">
-                    <div v-for="category in categories" :key="category.id" class="m-6 p-6 card bg-neutral">
-                        <Link :href="route('category', category.id)">
-                            <h3 class="font-semibold text-xl leading-tight">{{ category.name }}</h3>
-                        </Link>
-                        <p>{{ category.description }}</p>
-                    </div>
-                </div>
-                <div class="flex">
-                    <div v-for="item in items" :key="item.id" class="m-6 p-6 card bg-neutral">
-                        <Link :href="route('item', item.id)">
-                            <h3 class="font-semibold text-xl leading-tight">{{ item.name }}</h3>
-                        </Link>
-                        <p>{{ item.description }}</p>
-                        <p class="text-indigo-400">{{ item.base_price }}</p>
-                    </div>
-                </div>
+  <AuthenticatedLayout>
+    <template #header>
+      <h2 class="font-semibold text-xl leading-tight">Dashboard</h2>
+    </template>
+
+    <div class="py-12">
+      <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <Accordion title="Menus" :current-accordion="currentAccordion" :index="0"
+          @accordion-click="(i: number) => handleAccordionChange(i)">
+          <button @click="menuModal.showModal()" class="btn">Add Menu</button>
+          <dialog ref="menuModal" id="menuModal" class="modal">
+            <div class="modal-box">
+              <h3 class="font-bold text-lg">Hello!</h3>
+              <p class="py-4">Press ESC key or click the button below to close</p>
+              <div class="modal-action">
+                <form method="dialog">
+                  <!-- if there is a button in form, it will close the modal -->
+                  <button class="btn">Close</button>
+                </form>
+              </div>
             </div>
-        </div>
-    </AuthenticatedLayout>
+          </dialog>
+
+          <ul class="list-disc list-inside">
+            <li v-for="menu in menus" :key="menu.id">{{ menu.name }}</li>
+          </ul>
+        </Accordion>
+
+        <Accordion title="Categories" :current-accordion="currentAccordion" :index="1"
+          @accordion-click="(i: number) => handleAccordionChange(i)">
+          <ul class="list-disc list-inside">
+            <li v-for="category in categories" :key="category.id">{{ category.name }}</li>
+          </ul>
+        </Accordion>
+
+        <Accordion title="Items" :current-accordion="currentAccordion" :index="2"
+          @accordion-click="(i: number) => handleAccordionChange(i)">
+          <ul class="list-disc list-inside">
+            <li v-for="item in items" :key="item.id">{{ item.name }}</li>
+          </ul>
+        </Accordion>
+      </div>
+    </div>
+  </AuthenticatedLayout>
 </template>

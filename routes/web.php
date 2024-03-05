@@ -19,28 +19,28 @@ use Inertia\Inertia;
 */
 
 Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
+  return Inertia::render('Welcome', [
+    'canLogin' => Route::has('login'),
+    'canRegister' => Route::has('register'),
+    'laravelVersion' => Application::VERSION,
+    'phpVersion' => PHP_VERSION,
+  ]);
 });
 
 Route::prefix('menu')->controller(MenuController::class)->middleware(['auth', 'verified'])->group(function () {
-    Route::get('/', 'index')->name('menu');
-    Route::get('/category/{id}', 'category')->name('category');
-    Route::get('/item/{id}', 'item')->name('item');
+  Route::get('/', 'index')->name('menu');
+  Route::get('/category/{id}', 'category')->name('category');
+  Route::get('/item/{id}', 'item')->name('item');
 });
 
 Route::prefix('admin')->controller(AdminController::class)->middleware(['auth', 'admin'])->group(function () {
-    Route::get('/', 'index')->name('admin');
+  Route::get('/', 'index')->name('admin');
 });
 
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+  Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+  Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+  Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
