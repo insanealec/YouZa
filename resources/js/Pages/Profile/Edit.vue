@@ -6,37 +6,34 @@ import UpdateProfileInformationForm from './Partials/UpdateProfileInformationFor
 import { Head } from '@inertiajs/vue3';
 
 defineProps<{
-    mustVerifyEmail?: boolean;
-    status?: string;
+  mustVerifyEmail?: boolean;
+  status?: string;
 }>();
 </script>
 
 <template>
-    <Head title="Profile" />
 
-    <AuthenticatedLayout>
-        <template #header>
-            <h2 class="font-semibold text-xl leading-tight">Profile</h2>
-        </template>
+  <Head title="Profile" />
 
-        <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-                <div class="p-4 sm:p-8 shadow sm:rounded-lg card bg-neutral">
-                    <UpdateProfileInformationForm
-                        :must-verify-email="mustVerifyEmail"
-                        :status="status"
-                        class="max-w-xl"
-                    />
-                </div>
+  <AuthenticatedLayout>
+    <template #header>
+      <h2 class="font-semibold text-xl leading-tight">Profile</h2>
+    </template>
 
-                <div class="p-4 sm:p-8 shadow sm:rounded-lg card bg-neutral">
-                    <UpdatePasswordForm class="max-w-xl" />
-                </div>
-
-                <div class="p-4 sm:p-8 shadow sm:rounded-lg card bg-neutral">
-                    <DeleteUserForm class="max-w-xl" />
-                </div>
-            </div>
+    <div class="py-12">
+      <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
+        <div class="p-4 sm:p-8 shadow sm:rounded-lg card bg-neutral">
+          <UpdateProfileInformationForm :must-verify-email="mustVerifyEmail" :status="status" class="max-w-xl" />
         </div>
-    </AuthenticatedLayout>
+
+        <div class="p-4 sm:p-8 shadow sm:rounded-lg card bg-neutral">
+          <UpdatePasswordForm class="max-w-xl" />
+        </div>
+
+        <div class="p-4 sm:p-8 shadow sm:rounded-lg card bg-neutral">
+          <DeleteUserForm class="max-w-xl" />
+        </div>
+      </div>
+    </div>
+  </AuthenticatedLayout>
 </template>

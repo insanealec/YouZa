@@ -4,25 +4,26 @@ import { Head } from '@inertiajs/vue3';
 import { Item } from '../types';
 
 defineProps<{
-    item: Item;
+  item: Item;
 }>();
 </script>
 
 <template>
-    <Head :title="item.name" />
 
-    <AuthenticatedLayout>
-        <template #header>
-            <h2 class="font-semibold text-xl leading-tight">{{ item.name }}</h2>
-        </template>
+  <Head :title="item.name" />
 
-        <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="overflow-hidden shadow-sm sm:rounded-lg">
-                    <div class="p-6">{{ item.description }}</div>
-                    <div class="p-4 text-indigo-400">{{ item.base_price }}</div>
-                </div>
-            </div>
+  <AuthenticatedLayout>
+    <template #header>
+      <h2 class="font-semibold text-xl leading-tight">{{ item.name }}</h2>
+    </template>
+
+    <div class="py-12">
+      <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div class="overflow-hidden shadow-sm sm:rounded-lg">
+          <div class="p-6">{{ item.description }}</div>
+          <div class="p-4 text-indigo-400">{{ item.base_price }}</div>
         </div>
-    </AuthenticatedLayout>
+      </div>
+    </div>
+  </AuthenticatedLayout>
 </template>
