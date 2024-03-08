@@ -35,6 +35,17 @@ Route::prefix('menu')->controller(MenuController::class)->middleware(['auth', 'v
 
 Route::prefix('admin')->controller(AdminController::class)->middleware(['auth', 'admin'])->group(function () {
   Route::get('/', 'index')->name('admin');
+
+  Route::prefix('edit')->group(function () {
+    Route::get('/menu/{id?}', 'showMenu')->name('admin.show.menu');
+    Route::post('/menu', 'editMenu')->name('admin.edit.menu');
+
+    Route::get('/category/{id?}', 'showCategory')->name('admin.show.category');
+    Route::post('/category', 'editCategory')->name('admin.edit.category');
+
+    Route::get('/item/{id?}', 'showItem')->name('admin.show.item');
+    Route::post('/item', 'editItem')->name('admin.edit.item');
+  });
 });
 
 Route::middleware('auth')->group(function () {
