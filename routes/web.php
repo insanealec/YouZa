@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CarController;
+use App\Http\Controllers\ManufacturerController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
@@ -26,6 +28,11 @@ Route::get('/', function () {
     'phpVersion' => PHP_VERSION,
   ]);
 });
+
+Route::resources([
+  'cars' => CarController::class,
+  'manufacturers' => ManufacturerController::class,
+]);
 
 Route::prefix('menu')->controller(MenuController::class)->middleware(['auth', 'verified'])->group(function () {
   Route::get('/', 'index')->name('menu');

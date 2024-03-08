@@ -5,6 +5,17 @@ export interface User {
   email_verified_at: string;
 }
 
+export interface Manufacturer {
+  id: number;
+  name: string;
+}
+
+export interface Car {
+  id: number;
+  name: string;
+  manufacturer: Manufacturer;
+}
+
 export interface Menu {
   id: number;
   name: string;
