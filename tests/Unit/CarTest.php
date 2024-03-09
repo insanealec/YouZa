@@ -34,6 +34,7 @@ class CarTest extends TestCase
 
         $car->manufacturer_id = $manufactuer->id;
         $this->assertTrue($car->save());
-        $this->assertNotNull($car->manufacturer());
+        $car->refresh();
+        $this->assertNotNull($car->manufacturer);
     }
 }

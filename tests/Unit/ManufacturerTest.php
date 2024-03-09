@@ -22,15 +22,18 @@ class ManufacturerTest extends TestCase
 
     public function test_manufacturer_has_cars(): void
     {
-        $manufactuer = new Manufacturer;
-        $manufactuer->name = $this->faker->name;
+        $manufacturer = new Manufacturer;
+        $manufacturer->name = $this->faker->name;
+        $manufacturer->save();
+        $this->assertEmpty($manufacturer->cars);
 
         $car1 = new Car;
         $car1->name = $this->faker->name;
         $car2 = new Car;
         $car2->name = $this->faker->name;
 
-        $this->assertTrue($manufactuer->cars()->saveMany($car1, $car2));
-        $this->assertNotNull($manufactuer->cars());
+        $manufacturer->cars()->saveMany([$car1, $car2]);
+        $manufacturer->refresh();
+        $this->assertEquals($manufacturer->cars->count(), 2);
     }
 }
