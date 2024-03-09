@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import GuestLayout from '@/Layouts/GuestLayout.vue';
-import { Head, Link } from '@inertiajs/vue3';
+import { Head, Link, useForm, usePage } from '@inertiajs/vue3';
 import { Car } from '@/types';
 
-defineProps<{
-  car: Car;
-}>();
+const car = usePage().props.car as Car;
+
+const form = useForm({
+  name: car.name,
+});
 </script>
 
 <template>
@@ -16,9 +18,9 @@ defineProps<{
       <h2 class="font-semibold text-xl leading-tight">Update {{ car.name }}</h2>
     </template>
 
-    <form :action="`/cars/${car.id}`" method="UPDATE">
-      <input type="text" name="name" :value="car.name" />
-      <button type="submit">Update Car</button>
+    <form @submit.prevent="form.patch(route('cars.update', car.id))" class="mt-6 space-y-6">
+      <input type="text" name="name" v-model="form.name" placeholder="name" />
+      <button class="btn btn-primary" type="submit">Update Car</button>
     </form>
 
     <Link :href="route('cars.index')">Back</Link>

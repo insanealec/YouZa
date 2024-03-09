@@ -17,17 +17,15 @@ defineProps<{
       <h2 class="font-semibold text-xl leading-tight">All Cars</h2>
     </template>
 
+    <Link class="btn btn-primary" :href="route('cars.create')">Create Car</Link>
+
     <div class="py-12">
       <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-
-        <Link :href="route('cars.create')">Create Car</Link>
-
         <ul class="list-disc list-inside">
           <li v-for="car in cars" :key="car.id">
-            <Link :href="route('cars.show', car.id)">{{ car.name }}</Link>
+            <Link class="link" :href="route('cars.show', car.id)">{{ car.name }}</Link>
           </li>
         </ul>
-
       </div>
     </div>
   </GuestLayout>
