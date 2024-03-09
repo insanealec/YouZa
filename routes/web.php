@@ -34,6 +34,8 @@ Route::resources([
   'cars' => CarController::class,
   'manufacturers' => ManufacturerController::class,
 ]);
+Route::post('/manufacturers/{manufacturer}/cars', [ManufacturerController::class, 'storeCar'])->name('manufacturers.storeCar');
+Route::post('/cars/{car}/manufacturer', [CarController::class, 'dissociateManufacturer'])->name('cars.dissociateManufacturer');
 
 Route::prefix('menu')->controller(MenuController::class)->middleware(['auth', 'verified'])->group(function () {
   Route::get('/', 'index')->name('menu');

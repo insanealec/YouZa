@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Car;
+use App\Models\Manufacturer;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -78,5 +79,24 @@ class CarTest extends TestCase
         $response
             ->assertSessionHasNoErrors()
             ->assertRedirect('/cars');
+    }
+
+    public function test_can_dissociate_manufacturer(): void
+    {
+        $manufacturer = new Manufacturer;
+        $manufacturer->name = $this->faker->name;
+        $manufacturer->save();
+        $car = new Car;
+        $car->name = $this->faker->name;
+        $car->manufacturer()->associate($manufacturer);
+        $car->save();
+        $car->refresh();
+        $this->assertNotNull($car->manufacturer);
+
+        $response = $this->post('/cars/'.$car->id.'/manufacturer');
+
+        $response
+            ->assertSessionHasNoErrors()
+            ->assertRedirect('/cars/'.$car->id);
     }
 }

@@ -8,12 +8,13 @@ export interface User {
 export interface Manufacturer {
   id: number;
   name: string;
+  cars?: Car[];
 }
 
 export interface Car {
   id: number;
   name: string;
-  manufacturer: Manufacturer;
+  manufacturer?: Manufacturer;
 }
 
 export interface Menu {

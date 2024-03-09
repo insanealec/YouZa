@@ -7,7 +7,11 @@ defineProps<{
   car: Car;
 }>();
 
-const form = useForm({});
+const destroyForm = useForm({});
+
+const manufacturerForm = useForm({
+  id: '',
+});
 </script>
 
 <template>
@@ -20,13 +24,19 @@ const form = useForm({});
 
     <Link class="btn btn-primary m-2" :href="route('cars.edit', car.id)">Update Car</Link>
 
-    <form class="m-2" @submit.prevent="form.delete(route('cars.destroy', car.id))">
+    <form class="m-2" @submit.prevent="destroyForm.delete(route('cars.destroy', car.id))">
       <button class="btn w-full" type="submit">Delete Car</button>
     </form>
 
     <div class="py-12">
       <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-        <p v-if="car.manufacturer">{{ car.manufacturer.name }}</p>
+        <h3 class="font-bold">Manufacturer</h3>
+        <div v-if="car.manufacturer" class="flex justify-center items-center">
+          <p>{{ car.manufacturer.name }}</p>
+          <form class="m-2" @submit.prevent="manufacturerForm.post(route('cars.dissociateManufacturer', car.id))">
+            <button class="btn w-full" type="submit">Remove Car from {{ car.manufacturer.name }}</button>
+          </form>
+        </div>
         <p v-else>No Manufacturer on File</p>
       </div>
     </div>

@@ -41,7 +41,7 @@ class CarController extends Controller
     public function show(Car $car)
     {
         return Inertia::render('RoofMaxx/Car', [
-          'car' => $car
+          'car' => $car->load('manufacturer')
         ]);
     }
 
@@ -71,5 +71,12 @@ class CarController extends Controller
     {
         $car->delete();
         return redirect()->route('cars.index');
+    }
+
+    public function dissociateManufacturer(Car $car)
+    {
+        $car->manufacturer()->dissociate();
+        $car->save();
+        return redirect()->route('cars.show', $car);
     }
 }

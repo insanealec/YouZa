@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\Car;
 use App\Models\Manufacturer;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -76,5 +77,19 @@ class ManufacturerTest extends TestCase
       $response
           ->assertSessionHasNoErrors()
           ->assertRedirect('/manufacturers');
+  }
+
+  public function test_can_store_car(): void
+  {
+      $car = new Car;
+      $car->name = $this->faker->name;
+      $car->save();
+      $response = $this->post('/manufacturers/1/cars', [
+          'id' => $car->id,
+      ]);
+
+      $response
+          ->assertSessionHasNoErrors()
+          ->assertRedirect('/manufacturers/1');
   }
 }

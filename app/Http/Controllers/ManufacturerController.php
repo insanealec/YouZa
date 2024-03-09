@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Car;
 use App\Models\Manufacturer;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -41,7 +42,8 @@ class ManufacturerController extends Controller
   public function show(Manufacturer $manufacturer)
   {
     return Inertia::render('RoofMaxx/Manufacturer', [
-      'Manufacturer' => $manufacturer
+      'manufacturer' => $manufacturer->load('cars'),
+      'cars' => Car::all(),
     ]);
   }
 
@@ -51,7 +53,7 @@ class ManufacturerController extends Controller
   public function edit(Manufacturer $manufacturer)
   {
     return Inertia::render('RoofMaxx/EditManufacturer', [
-      'Manufacturer' => $manufacturer
+      'manufacturer' => $manufacturer
     ]);
   }
 
@@ -71,5 +73,11 @@ class ManufacturerController extends Controller
   {
     $manufacturer->delete();
     return redirect()->route('manufacturers.index');
+  }
+
+  public function storeCar(Request $request, Manufacturer $manufacturer)
+  {
+    $manufacturer->cars()->save(Car::findOrFail($request->input('id')));
+    return redirect()->route('manufacturers.show', $manufacturer);
   }
 }
