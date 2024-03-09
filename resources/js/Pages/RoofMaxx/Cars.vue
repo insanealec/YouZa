@@ -28,5 +28,7 @@ defineProps<{
         </ul>
       </div>
     </div>
+
+    <Link class="link" :href="route('welcome')">Home</Link>
   </GuestLayout>
 </template>

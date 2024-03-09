@@ -23,6 +23,6 @@ const form = useForm({
       <button class="btn btn-primary" type="submit">Update Car</button>
     </form>
 
-    <Link :href="route('cars.index')">Back</Link>
+    <Link class="link" :href="route('cars.index')">Back</Link>
   </GuestLayout>
 </template>

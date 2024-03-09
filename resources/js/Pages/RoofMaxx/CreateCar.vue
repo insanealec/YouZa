@@ -20,6 +20,6 @@ const form = useForm({
       <button class="btn btn-primary" type="submit">Create Car</button>
     </form>
 
-    <Link :href="route('cars.index')">Back</Link>
+    <Link class="link" :href="route('cars.index')">Back</Link>
   </GuestLayout>
 </template>
