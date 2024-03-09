@@ -29,6 +29,7 @@ Route::get('/', function () {
   ]);
 });
 
+
 Route::resources([
   'cars' => CarController::class,
   'manufacturers' => ManufacturerController::class,

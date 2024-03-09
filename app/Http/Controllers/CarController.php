@@ -23,7 +23,7 @@ class CarController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('RoofMaxx/CreateCar');
     }
 
     /**
@@ -31,7 +31,8 @@ class CarController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Car::create($request->all());
+        return redirect()->route('cars.index');
     }
 
     /**
@@ -39,7 +40,9 @@ class CarController extends Controller
      */
     public function show(Car $car)
     {
-        //
+        return Inertia::render('RoofMaxx/Car', [
+          'car' => $car
+        ]);
     }
 
     /**
@@ -47,7 +50,9 @@ class CarController extends Controller
      */
     public function edit(Car $car)
     {
-        //
+        return Inertia::render('RoofMaxx/EditCar', [
+          'car' => $car
+        ]);
     }
 
     /**
@@ -55,7 +60,8 @@ class CarController extends Controller
      */
     public function update(Request $request, Car $car)
     {
-        //
+        $car->update($request->all());
+        return redirect()->route('cars.index');
     }
 
     /**
@@ -63,6 +69,7 @@ class CarController extends Controller
      */
     public function destroy(Car $car)
     {
-        //
+        $car->delete();
+        return redirect()->route('cars.index');
     }
 }

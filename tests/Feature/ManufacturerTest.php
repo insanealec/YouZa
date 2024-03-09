@@ -11,7 +11,7 @@ class ManufacturerTest extends TestCase
     /**
      * A basic feature test example.
      */
-    public function can_view_manufacturers_page(): void
+    public function test_can_view_manufacturers_page(): void
     {
         $response = $this->get('/manufacturers');
 
