@@ -2,15 +2,13 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\TestCase;
 
 class ManufacturerTest extends TestCase
 {
-    /**
-     * A basic feature test example.
-     */
+    use DatabaseMigrations;
+
     public function test_can_view_manufacturers_page(): void
     {
         $response = $this->get('/manufacturers');

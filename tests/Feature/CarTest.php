@@ -2,14 +2,23 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use App\Models\Car;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class CarTest extends TestCase
 {
-    /**
-     * A basic feature test example.
-     */
+    use DatabaseMigrations, WithFaker;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+        $car = new Car;
+        $car->name = $this->faker->name;
+        $car->save();
+    }
+
     public function test_can_view_cars_page(): void
     {
         $response = $this->get('/cars');
@@ -18,7 +27,6 @@ class CarTest extends TestCase
     }
 
     public function test_can_view_car_creation_page(): void
-
     {
         $response = $this->get('/cars/create');
 
