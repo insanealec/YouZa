@@ -4,31 +4,27 @@ import { Head, Link } from '@inertiajs/vue3';
 import { Car } from '@/types';
 
 defineProps<{
-  cars: Car[];
+  car: Car;
 }>();
 </script>
 
 <template>
-
-  <Head title="All Cars" />
+  <Head :title="car.name" />
 
   <GuestLayout>
     <template #header>
-      <h2 class="font-semibold text-xl leading-tight">All Cars</h2>
+      <h2 class="font-semibold text-xl leading-tight">{{ car.name }}</h2>
     </template>
+
+    <Link :href="route('cars.edit', car.id)">Update Car</Link>
 
     <div class="py-12">
       <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-
-        <Link :href="route('cars.create')">Create Car</Link>
-
-        <ul class="list-disc list-inside">
-          <li v-for="car in cars" :key="car.id">
-            <Link :href="route('cars.show', car.id)">{{ car.name }}</Link>
-          </li>
-        </ul>
-
+        <p v-if="car.manufacturer">{{ car.manufacturer.name }}</p>
+        <p v-else>No Manufacturer on File</p>
       </div>
     </div>
+
+    <Link :href="route('cars.index')">Back</Link>
   </GuestLayout>
 </template>

@@ -32,7 +32,9 @@ class CarTest extends TestCase
             'manufacturer_id' => null
         ]);
 
-        $response->assertStatus(302);
+        $response
+            ->assertSessionHasNoErrors()
+            ->assertRedirect('/cars');
     }
 
     public function test_can_show_car(): void
@@ -56,13 +58,17 @@ class CarTest extends TestCase
             'manufacturer_id' => null
         ]);
 
-        $response->assertStatus(302);
+        $response
+            ->assertSessionHasNoErrors()
+            ->assertRedirect('/cars');
     }
 
     public function test_can_delete_car(): void
     {
         $response = $this->delete('/cars/1');
 
-        $response->assertStatus(302);
+        $response
+            ->assertSessionHasNoErrors()
+            ->assertRedirect('/cars');
     }
 }
