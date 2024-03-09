@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Car;
+use App\Models\Manufacturer;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -14,7 +15,8 @@ class CarController extends Controller
     public function index()
     {
       return Inertia::render('RoofMaxx/Cars', [
-        'cars' => Car::all()
+        'cars' => Car::all(),
+        'manufacturers' => Manufacturer::all()
       ]);
     }
 
