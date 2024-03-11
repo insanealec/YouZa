@@ -12,12 +12,12 @@ class ManufacturerTest extends TestCase
 {
   use DatabaseMigrations, WithFaker;
 
+  private $manufacturer;
+
   public function setUp(): void
   {
       parent::setUp();
-      $manufacturer = new Manufacturer;
-      $manufacturer->name = $this->faker->name;
-      $manufacturer->save();
+      $this->manufacturer = Manufacturer::factory()->create();
   }
 
   public function test_can_view_manufacturers_page(): void
@@ -47,21 +47,21 @@ class ManufacturerTest extends TestCase
 
   public function test_can_show_manufacturer(): void
   {
-      $response = $this->get('/manufacturers/1');
+      $response = $this->get("/manufacturers/{$this->manufacturer->id}");
 
       $response->assertStatus(200);
   }
 
   public function test_can_view_manufacturer_edit_page(): void
   {
-      $response = $this->get('/manufacturers/1/edit');
+      $response = $this->get("/manufacturers/{$this->manufacturer->id}/edit");
 
       $response->assertStatus(200);
   }
 
   public function test_can_update_manufacturer(): void
   {
-      $response = $this->put('/manufacturers/1', [
+      $response = $this->put("/manufacturers/{$this->manufacturer->id}", [
           'name' => 'Test Manufacturer',
       ]);
 
@@ -72,7 +72,7 @@ class ManufacturerTest extends TestCase
 
   public function test_can_delete_manufacturer(): void
   {
-      $response = $this->delete('/manufacturers/1');
+      $response = $this->delete("/manufacturers/{$this->manufacturer->id}");
 
       $response
           ->assertSessionHasNoErrors()
@@ -84,12 +84,12 @@ class ManufacturerTest extends TestCase
       $car = new Car;
       $car->name = $this->faker->name;
       $car->save();
-      $response = $this->post('/manufacturers/1/cars', [
+      $response = $this->post("/manufacturers/{$this->manufacturer->id}/cars", [
           'id' => $car->id,
       ]);
 
       $response
           ->assertSessionHasNoErrors()
-          ->assertRedirect('/manufacturers/1');
+          ->assertRedirect("/manufacturers/{$this->manufacturer->id}");
   }
 }
