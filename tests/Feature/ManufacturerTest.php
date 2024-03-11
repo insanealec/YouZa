@@ -81,9 +81,7 @@ class ManufacturerTest extends TestCase
 
   public function test_can_store_car(): void
   {
-      $car = new Car;
-      $car->name = $this->faker->name;
-      $car->save();
+      $car = Car::factory()->create();
       $response = $this->post("/manufacturers/{$this->manufacturer->id}/cars", [
           'id' => $car->id,
       ]);
@@ -95,9 +93,7 @@ class ManufacturerTest extends TestCase
 
   public function test_can_remove_car(): void
   {
-      $car = new Car;
-      $car->name = $this->faker->name;
-      $car->save();
+      $car = Car::factory()->create();
       $this->manufacturer->cars()->save($car);
       $response = $this->delete("/manufacturers/{$this->manufacturer->id}/cars", [
           'id' => $car->id,
