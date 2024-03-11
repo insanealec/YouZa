@@ -14,6 +14,7 @@ export interface Manufacturer {
 export interface Car {
   id: number;
   name: string;
+  manufacturer_id?: number;
   manufacturer?: Manufacturer;
 }
 

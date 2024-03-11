@@ -40,11 +40,22 @@ const filteredCars = computed(() => {
             <option v-for="manufacturer in manufacturers" :key="manufacturer.id" :value="manufacturer.id">{{ manufacturer.name }}</option>
           </select>
         </div>
-        <ul class="list-disc list-inside">
-          <li v-for="car in filteredCars" :key="car.id">
-            <Link class="link" :href="route('cars.show', car.id)">{{ car.name }}</Link>
-          </li>
-        </ul>
+        <div class="overflow-x-auto">
+          <table class="table">
+            <thead>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Manufacturer</th>
+            </thead>
+            <tbody>
+              <tr v-for="car in filteredCars" :key="car.id">
+                <td>{{ car.id }}</td>
+                <td>{{ car.name }}</td>
+                <td>{{ manufacturers.find((m) => m.id === car.manufacturer_id)?.name }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
 
