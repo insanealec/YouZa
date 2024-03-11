@@ -33,7 +33,7 @@ const manufacturerForm = useForm({
         <h3 class="font-bold">Manufacturer</h3>
         <div v-if="car.manufacturer" class="flex justify-center items-center">
           <p>{{ car.manufacturer.name }}</p>
-          <form class="m-2" @submit.prevent="manufacturerForm.post(route('cars.dissociateManufacturer', car.id))">
+          <form class="m-2" @submit.prevent="manufacturerForm.delete(route('cars.dissociateManufacturer', car.id))">
             <button class="btn w-full" type="submit">Remove Car from {{ car.manufacturer.name }}</button>
           </form>
         </div>

@@ -89,7 +89,7 @@ class CarTest extends TestCase
         $this->car->refresh();
         $this->assertNotNull($this->car->manufacturer);
 
-        $response = $this->post("/cars/{$this->car->id}/manufacturer");
+        $response = $this->delete("/cars/{$this->car->id}/manufacturer");
 
         $response
             ->assertSessionHasNoErrors()
