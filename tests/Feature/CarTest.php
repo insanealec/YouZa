@@ -81,6 +81,19 @@ class CarTest extends TestCase
             ->assertRedirect('/cars');
     }
 
+    public function test_can_associate_manufacturer(): void
+    {
+        $manufacturer = Manufacturer::factory()->create();
+
+        $response = $this->post("/cars/{$this->car->id}/manufacturer", [
+            'id' => $manufacturer->id
+        ]);
+
+        $response
+            ->assertSessionHasNoErrors()
+            ->assertRedirect("/cars/{$this->car->id}");
+    }
+
     public function test_can_dissociate_manufacturer(): void
     {
         $manufacturer = Manufacturer::factory()->create();

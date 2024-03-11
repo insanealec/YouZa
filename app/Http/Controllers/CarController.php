@@ -75,6 +75,13 @@ class CarController extends Controller
         return redirect()->route('cars.index');
     }
 
+    public function associateManufacturer(Request $request, Car $car)
+    {
+        $car->manufacturer()->associate($request->input('id'));
+        $car->save();
+        return redirect()->route('cars.show', $car);
+    }
+
     public function dissociateManufacturer(Car $car)
     {
         $car->manufacturer()->dissociate();
