@@ -92,4 +92,19 @@ class ManufacturerTest extends TestCase
           ->assertSessionHasNoErrors()
           ->assertRedirect("/manufacturers/{$this->manufacturer->id}");
   }
+
+  public function test_can_remove_car(): void
+  {
+      $car = new Car;
+      $car->name = $this->faker->name;
+      $car->save();
+      $this->manufacturer->cars()->save($car);
+      $response = $this->delete("/manufacturers/{$this->manufacturer->id}/cars", [
+          'id' => $car->id,
+      ]);
+
+      $response
+          ->assertSessionHasNoErrors()
+          ->assertRedirect("/manufacturers/{$this->manufacturer->id}");
+  }
 }

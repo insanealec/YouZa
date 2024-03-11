@@ -35,6 +35,7 @@ Route::resources([
   'manufacturers' => ManufacturerController::class,
 ]);
 Route::post('/manufacturers/{manufacturer}/cars', [ManufacturerController::class, 'storeCar'])->name('manufacturers.storeCar');
+Route::delete('/manufacturers/{manufacturer}/cars', [ManufacturerController::class, 'removeCar'])->name('manufacturers.removeCar');
 Route::post('/cars/{car}/manufacturer', [CarController::class, 'associateManufacturer'])->name('cars.associateManufacturer');
 Route::delete('/cars/{car}/manufacturer', [CarController::class, 'dissociateManufacturer'])->name('cars.dissociateManufacturer');
 

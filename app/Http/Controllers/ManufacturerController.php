@@ -80,4 +80,10 @@ class ManufacturerController extends Controller
     $manufacturer->cars()->save(Car::findOrFail($request->input('id')));
     return redirect()->route('manufacturers.show', $manufacturer);
   }
+
+  public function removeCar(Request $request, Manufacturer $manufacturer)
+  {
+    $manufacturer->cars()->where('id', $request->input('id'))->delete();
+    return redirect()->route('manufacturers.show', $manufacturer);
+  }
 }
