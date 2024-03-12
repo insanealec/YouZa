@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import GuestLayout from '@/Layouts/GuestLayout.vue';
+import DealershipLayout from '@/Layouts/DealershipLayout.vue';
 import { Head, Link } from '@inertiajs/vue3';
 import { Car, Manufacturer } from '@/types';
 import { ref, computed } from 'vue';
@@ -24,7 +24,7 @@ const filteredCars = computed(() => {
 
   <Head title="All Cars" />
 
-  <GuestLayout>
+  <DealershipLayout>
     <template #header>
       <h2 class="font-semibold text-xl leading-tight">All Cars</h2>
     </template>
@@ -50,7 +50,7 @@ const filteredCars = computed(() => {
             <tbody>
               <tr v-for="car in filteredCars" :key="car.id">
                 <td>{{ car.id }}</td>
-                <td>{{ car.name }}</td>
+                <td><Link class="link" :href="route('cars.show', car.id)">{{ car.name }}</Link></td>
                 <td>{{ manufacturers.find((m) => m.id === car.manufacturer_id)?.name }}</td>
               </tr>
             </tbody>
@@ -60,5 +60,5 @@ const filteredCars = computed(() => {
     </div>
 
     <Link class="link" :href="route('welcome')">Home</Link>
-  </GuestLayout>
+  </DealershipLayout>
 </template>
