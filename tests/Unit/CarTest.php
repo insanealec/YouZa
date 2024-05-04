@@ -14,25 +14,22 @@ class CarTest extends TestCase
 
     public function test_car_can_save(): void
     {
-        $car = new Car;
-        $car->name = $this->faker->name;
+        $car = Car::factory()->make();
 
         $this->assertTrue($car->save());
     }
 
     public function test_car_has_manufacturer(): void
     {
-        $manufactuer = new Manufacturer;
-        $manufactuer->name = $this->faker->name;
+        $manufactuer = Manufacturer::factory()->make();
         $this->assertTrue($manufactuer->save());
 
-        $car = new Car;
-        $car->name = $this->faker->name;
+        $car = Car::factory()->make();
         $this->assertTrue($car->save());
 
         $this->assertNull($car->manufacturer);
 
-        $car->manufacturer_id = $manufactuer->id;
+        $car->manufacturer()->associate($manufactuer);
         $this->assertTrue($car->save());
         $car->refresh();
         $this->assertNotNull($car->manufacturer);

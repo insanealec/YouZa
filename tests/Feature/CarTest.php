@@ -12,12 +12,12 @@ class CarTest extends TestCase
 {
     use DatabaseMigrations, WithFaker;
 
+    private $car;
+
     public function setUp(): void
     {
         parent::setUp();
-        $car = new Car;
-        $car->name = $this->faker->name;
-        $car->save();
+        $this->car = Car::factory()->create();
     }
 
     public function test_can_view_cars_page(): void
@@ -48,21 +48,21 @@ class CarTest extends TestCase
 
     public function test_can_show_car(): void
     {
-        $response = $this->get('/cars/1');
+        $response = $this->get("/cars/{$this->car->id}");
 
         $response->assertStatus(200);
     }
 
     public function test_can_view_car_edit_page(): void
     {
-        $response = $this->get('/cars/1/edit');
+        $response = $this->get("/cars/{$this->car->id}/edit");
 
         $response->assertStatus(200);
     }
 
     public function test_can_update_car(): void
     {
-        $response = $this->put('/cars/1', [
+        $response = $this->put("/cars/{$this->car->id}", [
             'name' => 'Test Car',
             'manufacturer_id' => null
         ]);
@@ -74,29 +74,38 @@ class CarTest extends TestCase
 
     public function test_can_delete_car(): void
     {
-        $response = $this->delete('/cars/1');
+        $response = $this->delete("/cars/{$this->car->id}");
 
         $response
             ->assertSessionHasNoErrors()
             ->assertRedirect('/cars');
     }
 
-    public function test_can_dissociate_manufacturer(): void
+    public function test_can_associate_manufacturer(): void
     {
-        $manufacturer = new Manufacturer;
-        $manufacturer->name = $this->faker->name;
-        $manufacturer->save();
-        $car = new Car;
-        $car->name = $this->faker->name;
-        $car->manufacturer()->associate($manufacturer);
-        $car->save();
-        $car->refresh();
-        $this->assertNotNull($car->manufacturer);
+        $manufacturer = Manufacturer::factory()->create();
 
-        $response = $this->post('/cars/'.$car->id.'/manufacturer');
+        $response = $this->post("/cars/{$this->car->id}/manufacturer", [
+            'id' => $manufacturer->id
+        ]);
 
         $response
             ->assertSessionHasNoErrors()
-            ->assertRedirect('/cars/'.$car->id);
+            ->assertRedirect("/cars/{$this->car->id}");
+    }
+
+    public function test_can_dissociate_manufacturer(): void
+    {
+        $manufacturer = Manufacturer::factory()->create();
+        $this->car->manufacturer()->associate($manufacturer);
+        $this->car->save();
+        $this->car->refresh();
+        $this->assertNotNull($this->car->manufacturer);
+
+        $response = $this->delete("/cars/{$this->car->id}/manufacturer");
+
+        $response
+            ->assertSessionHasNoErrors()
+            ->assertRedirect("/cars/{$this->car->id}");
     }
 }

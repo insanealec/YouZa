@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import GuestLayout from '@/Layouts/GuestLayout.vue';
+import DealershipLayout from '@/Layouts/DealershipLayout.vue';
 import { Head, Link, useForm, usePage } from '@inertiajs/vue3';
 import { Manufacturer } from '@/types';
 
@@ -13,7 +13,7 @@ const form = useForm({
 <template>
   <Head :title="`Update ${manufacturer.name}`" />
 
-  <GuestLayout>
+  <DealershipLayout>
     <template #header>
       <h2 class="font-semibold text-xl leading-tight">Update {{ manufacturer.name }}</h2>
     </template>
@@ -24,5 +24,5 @@ const form = useForm({
     </form>
 
     <Link class="link" :href="route('manufacturers.index')">Back</Link>
-  </GuestLayout>
+  </DealershipLayout>
 </template>

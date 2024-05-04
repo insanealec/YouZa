@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import GuestLayout from '@/Layouts/GuestLayout.vue';
+import DealershipLayout from '@/Layouts/DealershipLayout.vue';
 import { Head, Link } from '@inertiajs/vue3';
 import { Car, Manufacturer } from '@/types';
 import { ref, computed } from 'vue';
@@ -24,7 +24,7 @@ const filteredCars = computed(() => {
 
   <Head title="All Cars" />
 
-  <GuestLayout>
+  <DealershipLayout>
     <template #header>
       <h2 class="font-semibold text-xl leading-tight">All Cars</h2>
     </template>
@@ -40,14 +40,25 @@ const filteredCars = computed(() => {
             <option v-for="manufacturer in manufacturers" :key="manufacturer.id" :value="manufacturer.id">{{ manufacturer.name }}</option>
           </select>
         </div>
-        <ul class="list-disc list-inside">
-          <li v-for="car in filteredCars" :key="car.id">
-            <Link class="link" :href="route('cars.show', car.id)">{{ car.name }}</Link>
-          </li>
-        </ul>
+        <div class="overflow-x-auto">
+          <table class="table">
+            <thead>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Manufacturer</th>
+            </thead>
+            <tbody>
+              <tr v-for="car in filteredCars" :key="car.id">
+                <td>{{ car.id }}</td>
+                <td><Link class="link" :href="route('cars.show', car.id)">{{ car.name }}</Link></td>
+                <td>{{ manufacturers.find((m) => m.id === car.manufacturer_id)?.name }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
 
     <Link class="link" :href="route('welcome')">Home</Link>
-  </GuestLayout>
+  </DealershipLayout>
 </template>
