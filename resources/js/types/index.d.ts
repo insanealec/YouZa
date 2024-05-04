@@ -5,6 +5,19 @@ export interface User {
   email_verified_at: string;
 }
 
+export interface Manufacturer {
+  id: number;
+  name: string;
+  cars?: Car[];
+}
+
+export interface Car {
+  id: number;
+  name: string;
+  manufacturer_id?: number;
+  manufacturer?: Manufacturer;
+}
+
 export interface Menu {
   id: number;
   name: string;

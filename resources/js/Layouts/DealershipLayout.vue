@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import ApplicationLogo from '@/Components/ApplicationLogo.vue';
-import { Link } from '@inertiajs/vue3';
 </script>
 
 <template>
@@ -11,14 +9,9 @@ import { Link } from '@inertiajs/vue3';
                 <slot name="header" />
             </div>
         </header>
-        <div v-else>
-            <Link href="/">
-                <ApplicationLogo class="w-20 h-20 fill-current text-primary" />
-            </Link>
-        </div>
 
         <div
-            class="w-full sm:max-w-md mt-6 px-6 py-4 card bg-neutral"
+            class="container px-6 py-4 card bg-neutral"
         >
             <slot />
         </div>
